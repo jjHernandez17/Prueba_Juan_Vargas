@@ -1,0 +1,101 @@
+@model JuanJoseVargas.Models.Appointment
+
+@{
+    ViewData["Title"] = "Editar Cita Médica";
+}
+
+<style>
+    body {
+        background-color: #1f1b2e;
+        color: #f8f9fa;
+    }
+    .card {
+        background-color: #2b2640;
+        border: none;
+    }
+    .form-control, .form-select {
+        background-color: #352f52;
+        color: #fff;
+        border: 1px solid #3d3760;
+    }
+    .form-control:focus, .form-select:focus {
+        background-color: #3f3663;
+        border-color: #6f42c1;
+        box-shadow: 0 0 0 0.2rem rgba(111,66,193,.25);
+        color: white;
+    }
+    .btn-purple {
+        background-color: #6f42c1;
+        color: white;
+    }
+    .btn-purple:hover {
+        background-color: #5a32a3;
+    }
+</style>
+
+<div class="container py-4">
+    <h2 class="fw-bold mb-4">
+        <i class="bi bi-pencil-square me-2"></i>Editar Cita Médica
+    </h2>
+
+    <div class="card p-4 shadow-sm">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="PatientId" />
+
+            <div class="row g-3">
+                <!-- Paciente -->
+                <div class="col-md-6">
+                    <label class="form-label">Paciente</label>
+                    <input type="text" class="form-control" value="@Model.Patient?.FullName" readonly />
+                </div>
+
+                <!-- Correo -->
+                <div class="col-md-6">
+                    <label class="form-label">Correo</label>
+                    <input type="text" class="form-control" value="@Model.Patient?.Email" readonly />
+                </div>
+
+                <!-- Doctor -->
+                <div class="col-md-6">
+                    <label class="form-label">Médico</label>
+                    <select asp-for="DoctorId" class="form-select">
+                        <option value="">Seleccione un médico</option>
+                        @foreach (var doctor in (IEnumerable<JuanJoseVargas.Models.Doctor>)ViewBag.Doctors)
+                        {
+                            <option value="@doctor.Id" selected="@(doctor.Id == Model.DoctorId)">
+                                @doctor.FullName — @doctor.Specialty
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Fecha -->
+                <div class="col-md-6">
+                    <label class="form-label">Fecha y Hora</label>
+                    <input asp-for="AppointmentDate" type="datetime-local" class="form-control"
+                           value="@Model.AppointmentDate.ToString("yyyy-MM-ddTHH:mm")" />
+                </div>
+
+                <!-- Estado -->
+                <div class="col-md-6">
+                    <label class="form-label">Estado</label>
+                    <select asp-for="Status" class="form-select">
+                        <option value="Scheduled" selected="@(Model.Status == JuanJoseVargas.Models.AppointmentStatus.Scheduled)">Programada</option>
+                        <option value="Attended" selected="@(Model.Status == JuanJoseVargas.Models.AppointmentStatus.Attended)">Atendida</option>
+                        <option value="Canceled" selected="@(Model.Status == JuanJoseVargas.Models.AppointmentStatus.Canceled)">Cancelada</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mt-4 d-flex justify-content-end gap-2">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left-circle"></i> Volver
+                </a>
+                <button type="submit" class="btn btn-purple">
+                    <i class="bi bi-save"></i> Guardar Cambios
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+
+@{
+    ViewData["Title"] = "Gestión de Médicos";
+    var message = TempData["message"];
+}
+@model IEnumerable<JuanJoseVargas.Models.Doctor>
+
+<div class="container py-4">
+    @if (message != null)
+    {
+        <div id="tempMessage" class="alert alert-success">
+            @message
+        </div> 
+        <script>
+            
+            setTimeout(function() {
+                var messageDiv = document.getElementById('tempMessage');
+                messageDiv.style.display = 'none'; 
+            }, 3000); 
+        </script>
+    }
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="fw-bold text-purple">Lista de Médicos</h2>
+        <a asp-controller="Doctor" asp-action="Create" class="btn btn-purple">
+            Agregar Médico
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle shadow-sm">
+            <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Documento</th>
+                <th>Especialidad</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th class="text-center">Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Ejemplo de datos de muestra -->
+            
+                @foreach(var d in Model){
+                    <tr>
+                <td>@d.Id</td>
+                <td>@d.FullName</td>
+                <td>@d.Document</td>
+                <td>@d.Specialty</td>
+                <td>@d.Phone</td>
+                <td>@d.Email</td>
+                <td class="text-center">
+                    <div class="btn-group" role="group">
+                        
+                        <a asp-controller="Doctor" asp-action="Edit" asp-route-id="@d.Id" class="btn btn-sm btn-outline-success">Editar</a>
+                        <a  asp-controller="Doctor" asp-action="delete" asp-route-id="@d.Id" class="btn btn-sm btn-outline-danger"  onclick="return confirm('Seguro que quieres eliminar al doctor @d.FullName?');">Eliminar</a>
+                    </div>
+                </td>
+                </tr>
+                }
+            
+            
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .text-purple {
+        color: #6f42c1;
+    }
+    .btn-purple {
+        background-color: #6f42c1;
+        color: #fff;
+    }
+    .btn-purple:hover {
+        background-color: #5b36a3;
+        color: #fff;
+    }
+</style>

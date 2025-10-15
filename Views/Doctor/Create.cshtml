@@ -1,0 +1,82 @@
+@{
+    ViewData["Title"] = "Agregar Médico";
+    
+        var message = TempData["message"];
+    
+    
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow border-0">
+                @if (message != null)
+                {
+                    <div id="tempMessage" class="alert alert-success">
+                        @message
+                    </div> 
+                    <script>
+            
+            setTimeout(function() {
+                var messageDiv = document.getElementById('tempMessage');
+                messageDiv.style.display = 'none'; 
+            }, 3000); 
+        </script>
+                }
+                <div class="card-header text-white bg-purple">
+                    <h4 class="mb-0">Registrar Nuevo Médico</h4>
+
+                </div>
+
+                <div class="card-body">
+                    <form method="post" asp-controller="Doctor" asp-action="Register">
+
+                        <div class="mb-3">
+                            <label for="FullName" class="form-label fw-semibold">Nombre completo</label>
+                            <input type="text" class="form-control" id="FullName" name="FullName" placeholder="Ej: Dr. Juan Pérez" required/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Document" class="form-label fw-semibold">Documento</label>
+                            <input type="text" class="form-control" id="Document" name="Document" placeholder="Ej: 123456789" required/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Specialty" class="form-label fw-semibold">Especialidad</label>
+                            <input type="text" class="form-control" id="Specialty" name="Specialty" placeholder="Ej: Cardiología" required/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Phone" class="form-label fw-semibold">Teléfono</label>
+                            <input type="tel" class="form-control" id="Phone" name="Phone" placeholder="Ej: 3101234567" required/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Email" class="form-label fw-semibold">Correo electrónico</label>
+                            <input type="email" class="form-control" id="Email" name="Email" placeholder="Ej: juanperez@hospital.com" required/>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-4">
+                            <a asp-controller="Doctor" asp-action="Index" class="btn btn-secondary me-2">Cancelar</a>
+                            <button type="submit" class="btn btn-purple">Guardar Médico</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-purple {
+        background-color: #6f42c1 !important;
+    }
+    .btn-purple {
+        background-color: #6f42c1;
+        color: #fff;
+    }
+    .btn-purple:hover {
+        background-color: #5b36a3;
+        color: #fff;
+    }
+</style>

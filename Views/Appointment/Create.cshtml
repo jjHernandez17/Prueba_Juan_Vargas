@@ -1,0 +1,149 @@
+@model IEnumerable<JuanJoseVargas.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Add Appointment";
+    var tempMessage = TempData["message"];
+}
+
+<style>
+    body {
+        background-color: #1f1b2e;
+        color: #f8f9fa;
+    }
+    .form-control, .form-select {
+        background-color: #2b2640;
+        color: #f8f9fa;
+        border: 1px solid #3d3760;
+    }
+    .form-control:focus, .form-select:focus {
+        background-color: #352f52;
+        color: #fff;
+        border-color: #6f42c1;
+        box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+    }
+    .btn-purple {
+        background-color: #6f42c1;
+        color: white;
+    }
+    .btn-purple:hover {
+        background-color: #5a32a3;
+        color: white;
+    }
+</style>
+
+<div class="container py-4">
+
+    <h2 class="fw-bold mb-4">
+        <i class="bi bi-calendar-plus me-2"></i>Agendar Nueva Cita Médica
+    </h2>
+
+    <!-- Mostrar mensajes -->
+    @if (tempMessage != null)
+    {
+        <div id="tempMessage" class="alert alert-success">
+            @tempMessage
+        </div> 
+        <script>
+            setTimeout(function() {
+                var messageDiv = document.getElementById('tempMessage');
+                messageDiv.style.display = 'none'; 
+            }, 3000);
+        </script>
+    }
+
+    <!-- 🔹 Formulario para buscar paciente -->
+    <form method="get" asp-controller="Appointment" asp-action="Create" class="card p-4 bg-dark border-0 shadow-sm mb-4" style="border-radius: 12px;">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-6">
+                <label for="patientDocument" class="form-label">Documento del Paciente</label>
+                <input type="text" 
+                       id="patientDocument" 
+                       name="document" 
+                       value="@ViewBag.Document" 
+                       class="form-control" 
+                       placeholder="Ingrese el número de documento" 
+                       required>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-purple w-100">Buscar</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- 🔹 Formulario para guardar cita -->
+    <form method="post" asp-controller="Appointment" asp-action="Create" class="card p-4 bg-dark border-0 shadow-sm" style="border-radius: 12px;">
+        <div class="row g-3">
+
+            <!-- Paciente encontrado -->
+            <div class="col-md-6">
+                <label for="patientName" class="form-label">Nombre del Paciente</label>
+                <input type="text" 
+                       id="patientName" 
+                       name="PatientName" 
+                       class="form-control" 
+                       value="@ViewBag.PatientName" 
+                       placeholder="Nombre del paciente" 
+                       readonly>
+            </div>
+
+            <div class="col-md-6">
+                <label for="patientEmail" class="form-label">Correo del Paciente</label>
+                <input type="email" 
+                       id="patientEmail" 
+                       name="PatientEmail" 
+                       class="form-control" 
+                       value="@ViewBag.PatientEmail" 
+                       placeholder="ejemplo@correo.com" 
+                       readonly>
+            </div>
+
+           
+            <input type="hidden" name="PatientId" value="@ViewBag.PatientId" />
+
+        
+            <div class="col-md-6">
+                <label for="doctorSelect" class="form-label">Médico</label>
+                <select name="DoctorAppointment" id="doctorSelect" class="form-select" required>
+                    <option value="">Seleccione un médico</option>
+                    @foreach (var doctor in Model)
+                    {
+                        <option value="@doctor.Id">@doctor.FullName — @doctor.Specialty</option>
+                    }
+                </select>
+            </div>
+
+            
+            <div class="col-md-6">
+                <label for="appointmentDate" class="form-label">Fecha</label>
+                <input type="date" id="appointmentDate" name="AppointmentDate" class="form-control" required>
+            </div>
+
+         
+            <div class="col-md-6">
+                <label for="appointmentTime" class="form-label">Hora</label>
+                <input type="time" id="appointmentTime" name="AppointmentTime" class="form-control" required>
+            </div>
+
+          
+            <div class="col-md-6">
+                <label for="appointmentStatus" class="form-label">Estado</label>
+                <select id="appointmentStatus" name="Status" class="form-select">
+                    <option value="Scheduled" selected>Programada</option>
+                    <option value="Attended">Atendida</option>
+                    <option value="Canceled">Cancelada</option>
+                </select>
+            </div>
+
+        </div>
+
+ 
+        <div class="mt-4 d-flex justify-content-end gap-2">
+            <button type="reset" class="btn btn-secondary">
+                <i class="bi bi-arrow-counterclockwise"></i> Cancelar
+            </button>
+            <button type="submit" class="btn btn-purple">
+                <i class="bi bi-save"></i> Guardar Cita
+            </button>
+        </div>
+    </form>
+</div>
