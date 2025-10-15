@@ -6,7 +6,7 @@
 }
 
 <div class="container py-4">
-    <!-- Encabezado con título y botón -->
+
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="fw-bold text-primary">Lista de Pacientes</h2>
         <a  asp-controller="Patient" asp-action="Create" class="btn btn-primary">
@@ -14,7 +14,7 @@
         </a>
     </div>
 
-    <!-- Mensaje de confirmación -->
+
     @if (message != null)
     {
         <div id="tempMessage" class="alert alert-success">
@@ -57,7 +57,7 @@
                                 <div class="btn-group" role="group">
                                     <a asp-controller="Patient" asp-action="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Editar</a>
                                     <a asp-controller="Patient" asp-action="Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger"
-                                       onclick="return confirm('⚠️ ¿Seguro que quieres eliminar a @p.FullName?');">
+                                       onclick="return confirm('¿Seguro que quieres eliminar a @p.FullName?');">
                                         Eliminar
                                     </a>
                                 </div>

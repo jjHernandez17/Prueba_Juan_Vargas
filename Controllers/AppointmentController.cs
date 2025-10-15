@@ -106,7 +106,7 @@ public async Task<IActionResult> Edit(int id)
         return RedirectToAction("Index");
     }
 
-    // Cargar los doctores disponibles para el combo
+   
     ViewBag.Doctors = await _context.Doctors.ToListAsync();
 
     return View(appointment);
@@ -121,7 +121,7 @@ public async Task<IActionResult> Edit(int id, Appointment updatedAppointment)
         return NotFound();
     }
 
-    // Validaciones básicas
+  
     if (updatedAppointment.DoctorId == 0 || updatedAppointment.PatientId == 0)
     {
         TempData["message"] = "Debe seleccionar un paciente y un médico.";
@@ -142,7 +142,7 @@ public async Task<IActionResult> Edit(int id, Appointment updatedAppointment)
             return RedirectToAction("Index");
         }
 
-        // Validar que el médico no tenga otra cita al mismo tiempo
+   
         bool doctorBusy = await _context.Appointments.AnyAsync(a =>
             a.DoctorId == updatedAppointment.DoctorId &&
             a.Id != id &&
@@ -155,7 +155,7 @@ public async Task<IActionResult> Edit(int id, Appointment updatedAppointment)
             return View(updatedAppointment);
         }
 
-        // Actualizar los campos editables
+       
         appointment.DoctorId = updatedAppointment.DoctorId;
         appointment.AppointmentDate = updatedAppointment.AppointmentDate;
         appointment.Status = updatedAppointment.Status;

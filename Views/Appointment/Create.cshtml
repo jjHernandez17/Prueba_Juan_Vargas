@@ -37,7 +37,7 @@
         <i class="bi bi-calendar-plus me-2"></i>Agendar Nueva Cita Médica
     </h2>
 
-    <!-- Mostrar mensajes -->
+
     @if (tempMessage != null)
     {
         <div id="tempMessage" class="alert alert-success">
@@ -51,7 +51,7 @@
         </script>
     }
 
-    <!-- 🔹 Formulario para buscar paciente -->
+
     <form method="get" asp-controller="Appointment" asp-action="Create" class="card p-4 bg-dark border-0 shadow-sm mb-4" style="border-radius: 12px;">
         <div class="row g-3 align-items-end">
             <div class="col-md-6">
@@ -70,11 +70,11 @@
         </div>
     </form>
 
-    <!-- 🔹 Formulario para guardar cita -->
+
     <form method="post" asp-controller="Appointment" asp-action="Create" class="card p-4 bg-dark border-0 shadow-sm" style="border-radius: 12px;">
         <div class="row g-3">
 
-            <!-- Paciente encontrado -->
+         
             <div class="col-md-6">
                 <label for="patientName" class="form-label">Nombre del Paciente</label>
                 <input type="text" 

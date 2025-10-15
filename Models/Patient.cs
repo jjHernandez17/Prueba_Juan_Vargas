@@ -22,6 +22,6 @@ public class Patient
     [EmailAddress]
     public string Email { get; set; }
 
-    // Navigation property
+    
     public ICollection<Appointment>? Appointments { get; set; }
 }
